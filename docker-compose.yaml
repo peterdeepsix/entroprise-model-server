@@ -7,7 +7,7 @@ services:
       - "8501:8501"
     volumes:
       - type: bind
-        source: models/t5.1.1.xxl_ssm_wq
-        target: /models/t5.1.1.xxl_ssm_wq/1
+        source: t5.1.1.xxl
+        target: /models/t5.1.1.xxl/1
     environment:
-      MODEL_NAME: t5.1.1.xxl_ssm_wq
+      MODEL_NAME: t5.1.1.xxl

@@ -1,7 +1,7 @@
 steps:
   # copy model bucket
   - name: "gcr.io/cloud-builders/gsutil"
-    args: ["cp", "-r", "${_EXPORT_BUCKET}", "models/t5.1.1.xxl_ssm_wq/"]
+    args: ["cp", "-r", "${_EXPORT_BUCKET}", "."]
   # Build the container image
   - name: "gcr.io/cloud-builders/docker"
     args:

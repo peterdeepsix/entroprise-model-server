@@ -1,0 +1,38 @@
+steps:
+  # copy model bucket
+  - name: "gcr.io/cloud-builders/gsutil"
+    args: ["cp", "-r", "${_EXPORT_BUCKET}", "models/t5.1.1.xxl_ssm_wq"]
+  # Build the container image
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "gcr.io/$PROJECT_ID/entroprise-model-server:$COMMIT_SHA",
+        ".",
+      ]
+  # Push the image to Container Registry
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "gcr.io/$PROJECT_ID/entroprise-model-server:$COMMIT_SHA"]
+  # Deploy image to Cloud Run
+  - name: "gcr.io/cloud-builders/gcloud"
+    args:
+      - "run"
+      - "deploy"
+      - "qa-model-server"
+      - "--image"
+      - "gcr.io/$PROJECT_ID/entroprise-model-server:$COMMIT_SHA"
+      - "--region"
+      - "us-central1"
+      - "--allow-unauthenticated"
+      - "--platform"
+      - "managed"
+      - "--memory=2Gi"
+    env:
+      - "PORT=8501"
+      - "MODEL_NAME=t5.1.1.xxl"
+images:
+  - gcr.io/$PROJECT_ID/qa-model-server
+
+substitutions:
+  _EXPORT_BUCKET: gs://t5-data/pretrained_models/t5.1.1.xxl

@@ -32,7 +32,7 @@ steps:
       - "PORT=8501"
       - "MODEL_NAME=t5.1.1.xxl"
 images:
-  - gcr.io/$PROJECT_ID/qa-model-server
+  - gcr.io/$PROJECT_ID/entroprise-model-server
 
 substitutions:
   _EXPORT_BUCKET: gs://t5-data/pretrained_models/t5.1.1.xxl

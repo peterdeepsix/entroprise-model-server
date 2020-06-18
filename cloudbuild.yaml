@@ -1,7 +1,7 @@
 steps:
   # copy model bucket
   - name: "gcr.io/cloud-builders/gsutil"
-    args: ["cp", "-r", "${_EXPORT_BUCKET}", "."]
+    args: ["cp", "-r", "${_EXPORT_BUCKET}", "./models/t5.1.1.xxl_ssm_wq"]
   # Build the container image
   - name: "gcr.io/cloud-builders/docker"
     args:
@@ -33,6 +33,7 @@ steps:
       - "MODEL_NAME=t5.1.1.xxl"
 images:
   - gcr.io/$PROJECT_ID/entroprise-model-server
+timeout: 3600s
 
 substitutions:
   _EXPORT_BUCKET: gs://t5-data/pretrained_models/t5.1.1.xxl
